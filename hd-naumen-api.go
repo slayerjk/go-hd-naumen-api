@@ -179,7 +179,7 @@ func TakeSCResponsibility(c *http.Client, baseUrl, accessKey, serviceCall string
 // procCodeclose(TEXT; Resolved) = catalogs$28411
 // solution(TEXT) = text
 // files(FILE) = files
-func AttachFilesAndSetAcceptance(c *http.Client, baseURL, accessKey, serviceCall string, files []string) error {
+func AttachFilesAndSetAcceptance(c *http.Client, baseURL, accessKey, serviceCall, solutionText string, files []string) error {
 	// form request URL
 	requestURL := fmt.Sprintf("%s/gateway/services/rest/waitingForAccept?accessKey=%s&params='%s',request,user", baseURL, accessKey, serviceCall)
 
@@ -189,7 +189,7 @@ func AttachFilesAndSetAcceptance(c *http.Client, baseURL, accessKey, serviceCall
 
 	// dataForm := url.Values{
 	// 	"procCodeClose": {"catalogs$28411"},
-	// 	"solution":      {"Запрос  исполнен, результат во вложении!"},
+	// 	"solution":      {"Request is done, result is in the attachement"},
 	// 	"files":         {strings.Join(files, ",")},
 	// }
 	// requestBody := strings.NewReader(dataForm.Encode())
@@ -215,7 +215,7 @@ func AttachFilesAndSetAcceptance(c *http.Client, baseURL, accessKey, serviceCall
 
 	// write fields to body
 	writer.WriteField("procCodeClose", "catalogs$28411")
-	writer.WriteField("solution", "Запрос  исполнен, результат во вложении!")
+	writer.WriteField("solution", solutionText)
 
 	// close form data
 	err := writer.Close()
